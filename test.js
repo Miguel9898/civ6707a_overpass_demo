@@ -10,11 +10,19 @@ const fetchOpenStreetMapData = async function() {
       },
       body:`
       [out:json]
-      [bbox:45.38826377760308,-73.970947265625,45.42086519967432,-73.9281177520752];
-      way["highway"="tertiary"]["name"~"saint", i];
-      (._;>;);
+      [bbox: 45.3755, -73.9979, 45.3920, -73.9748];
+      (
+
+        way["sidewalk:left"];
+        way["sidewalk:right"]; 
+        way["sidewalk"];
+        way["sidewalk:both"];
+        ._;
+        >;
+      );
       out body;
       `
+
     });
     const answer = await api.json();
     console.log(answer);
