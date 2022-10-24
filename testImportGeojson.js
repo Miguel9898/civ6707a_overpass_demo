@@ -18,7 +18,7 @@ const calculateArea = function(feature) {
     }
 };
 
-const calculateLegth = function(feature) {
+const calculateLength = function(feature) {
     if (feature.geometry.type === 'LineString' || feature.geometry.type === 'MultiLineString') {
         const lengthM = turfLength(feature, { units: 'meters'});
         return lengthM;
@@ -30,9 +30,14 @@ const calculateLegth = function(feature) {
 const geojson = readGeojsonFile('./export.geojson');
 
 // au lieu d'un map on cree le foreach (qui le rempli au fur et a mesure pour chaque id (map ca cree un array.)
-/*
-const areaEtLengthById = {};
-geojson.json */
+
+const areaetLengthbyId = {}; // on veut store nos valeurs dans cet objet vide.
+geojson.features.forEach(function(feature)) {
+    const area = calculateArea(feature);
+    const length = caluclateLength(feature);
+    areaetLengthbyId[features.properties.id] = area;
+    areaetLengthbyId[features.properties.id] = length;
+};
 
 /*
 const ids = geojson.features.map(function(feature) {
