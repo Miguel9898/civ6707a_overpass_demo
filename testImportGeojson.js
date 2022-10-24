@@ -1,5 +1,6 @@
 import fs from 'fs';
 import turfArea from '@turf/area';
+import turfLength from '@turf/length';
 
 const readGeojsonFile = function(filePath) {
 
@@ -17,17 +18,39 @@ const calculateArea = function(feature) {
     }
 };
 
-const geojson = readGeojsonFile('./test.geojson');
+const calculateLegth = function(feature) {
+    if (feature.geometry.type === 'LineString' || feature.geometry.type === 'MultiLineString') {
+        const lengthM = turfLength(feature, { units: 'meters'});
+        return lengthM;
+    } else {
+        return undefined;
+    }
+};
 
+const geojson = readGeojsonFile('./export.geojson');
+
+// au lieu d'un map on cree le foreach (qui le rempli au fur et a mesure pour chaque id (map ca cree un array.)
+/*
+const areaEtLengthById = {};
+geojson.json */
+
+/*
 const ids = geojson.features.map(function(feature) {
     return feature.properties.id;
 });
 const names = geojson.features.map(function(feature) {
-    return feature.properties.nom;
+    return feature.properties.names;
 });
 
 const areas = geojson.features.map(function(feature) {
     return calculateArea(feature);
 });
 
-console.log(ids, names, areas);
+const length = geojson.features.map(function(feature) {
+    return calculateLength(feature);
+});
+*/
+
+console.log(ids, names, length, areas);
+
+// on doit faire une boucle avec les [id]: [area] etc. 
