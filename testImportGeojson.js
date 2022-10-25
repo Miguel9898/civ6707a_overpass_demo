@@ -33,14 +33,19 @@ const geojson = readGeojsonFile('./export.geojson');
 
 const areaAndlengthbyId = {}; // on veut store nos valeurs dans cet objet vide. C
 geojson.features.forEach(function(feature) {
-    const areas = calculateArea(feature);
-    const length = caluclateLength(feature);
-    areaAndlengthbyId[features.properties.id] = {
-        areas: area,
+    const area = calculateArea(feature);
+    const length = calculateLength(feature);
+    areaAndlengthbyId[feature.properties.id] = {
+        area: area,
         length: length
     };
 });
    
+const nums = [1,2,3,4,5,6,7,8,9,10];
+nums.forEach(function(num) {
+    console.log(num ** 2);
+});
+
 
 
 /* Ca nous calcule les aires et les longueurs, mais ca ne nous retourne pas les valeurs dans le format souhaite. 
