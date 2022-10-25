@@ -31,15 +31,19 @@ const geojson = readGeojsonFile('./export.geojson');
 
 // au lieu d'un map on cree le foreach (qui le rempli au fur et a mesure pour chaque id (map ca cree un array.)
 
-const areaetLengthbyId = {}; // on veut store nos valeurs dans cet objet vide.
-geojson.features.forEach(function(feature)) {
-    const area = calculateArea(feature);
+const areaAndlengthbyId = {}; // on veut store nos valeurs dans cet objet vide. C
+geojson.features.forEach(function(feature) {
+    const areas = calculateArea(feature);
     const length = caluclateLength(feature);
-    areaetLengthbyId[features.properties.id] = area;
-    areaetLengthbyId[features.properties.id] = length;
-};
+    areaAndlengthbyId[features.properties.id] = {
+        areas: area,
+        length: length
+    };
+});
+   
 
-/*
+
+/* Ca nous calcule les aires et les longueurs, mais ca ne nous retourne pas les valeurs dans le format souhaite. 
 const ids = geojson.features.map(function(feature) {
     return feature.properties.id;
 });
@@ -56,6 +60,6 @@ const length = geojson.features.map(function(feature) {
 });
 */
 
-console.log(ids, names, length, areas);
+console.log(areaAndlengthbyId);
 
 // on doit faire une boucle avec les [id]: [area] etc. 
