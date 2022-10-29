@@ -11,6 +11,18 @@ Q1: 1.	Donner les statistiques sur distance
         ._;
         >;
       );
+
+      ( 
+        way["lanes"];
+        way["crossing"];
+        node["public_transport"];
+        node["crossings"];
+        way["maxspeed"];
+        node["shop"];
+        ._;
+        >;
+      );
+    
       out body;
 
 
@@ -87,9 +99,58 @@ Q8: Types de commerces
 [bbox: 45.3755, -73.9979, 45.3920, -73.9748];
 (
   node["shop"];
-  >;
+  
 );
  out body;
 
 */
 
+import fs from 'fs';
+import turfArea from '@turf/area';
+import turfLength from '@turf/length';
+
+const readGeojsonFile = function(filePath) {
+
+    const geojson = JSON.parse(fs.readFileSync(filePath));
+    return geojson;
+
+};
+
+const calculateArea = function(feature) {
+    if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
+        const areaM2 = turfArea(feature);
+        return areaM2;
+    } else {
+        return undefined;
+    }
+};
+
+const calculateLength = function(feature) {
+    if (feature.geometry.type === 'LineString' || feature.geometry.type === 'MultiLineString') {
+        const lengthM = turfLength(feature, { units: 'meters'});
+        return lengthM;
+    } else {
+        return undefined;
+    }
+};
+
+const geojson = readGeojsonFile('./export.geojson');
+
+// Ca nous calcule les aires et les longueurs, mais ca ne nous retourne pas les valeurs dans le format souhaite. 
+const ids = geojson.features.map(function(feature) {
+    return feature.properties.id;
+});
+const names = geojson.features.map(function(feature) {
+    return feature.properties.name;
+});
+
+const areas = geojson.features.map(function(feature) {
+    return calculateArea(feature);
+});
+
+const length = geojson.features.map(function(feature) {
+    return calculateLength(feature);
+});
+
+
+console.log(ids, names, areas, length);
