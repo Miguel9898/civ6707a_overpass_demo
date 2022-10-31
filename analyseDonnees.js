@@ -19,3 +19,5 @@ geojson.features.forEach(function(feature) { // On fait une fonction for each, e
     // a continuer
 
 // On veut creer une commande pour prendre les longueurs et les superficies du fichier testImportGeojson afin de trouver les trottoirs par km.  
+
+// Ensuite on veut write les donnees dans un fichier GEOJSON pour les importer dans QGIS.
