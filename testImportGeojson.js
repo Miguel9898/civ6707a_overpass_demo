@@ -33,21 +33,21 @@ const geojson = readGeojsonFile('./exportway.geojson');
 
 const areaAndlengthbyId = {}; // on veut store nos valeurs dans cet objet vide. 
 geojson.features.forEach(function(feature) {
+    let area = undefined;
+    let length = undefined;
     if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
-    const area = calculateArea(feature);
-    return area;
+    area = calculateArea(feature);
+    
     }
     else if (feature.geometry.type === 'LineString' || feature.geometry.type === 'MultiLineString') {
-        const length = calculateLength(feature, { units: 'meters'});
-        return length;
-    } else {
-        return undefined;
+    length = calculateLength(feature, { units: 'meters'});
+    }
+    if (area !== undefined || length !== undefined) {
+        areaAndlengthbyId[feature.properties["@id"]] = {
+            area: area,
+            length: length
         };
-
-    areaAndlengthbyId[feature.properties["@id"]] = {
-        area: area,
-        length: length
-    };
+    }
 }); 
 
 console.log(areaAndlengthbyId);
