@@ -1,6 +1,7 @@
 import fs from 'fs';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
+import { writeJsonData } from './src/manageData.js';
 
 const readGeojsonFile = function(filePath) {
 
@@ -51,6 +52,10 @@ geojson.features.forEach(function(feature) {
 }); 
 
 console.log(areaAndlengthbyId);
+
+
+writeJsonData(undefined, geojson);
+
 
 
 /*
