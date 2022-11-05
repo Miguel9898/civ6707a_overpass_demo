@@ -1,7 +1,7 @@
 import fs from 'fs';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
-import { writeJsonData } from './src/manageData.js';
+
 
 const readGeojsonFile = function(filePath) {
 
@@ -28,7 +28,7 @@ const calculateLength = function(feature) {
     }
 };
 
-const geojson = readGeojsonFile('./exportway.geojson');
+const geojson = readGeojsonFile('./DonneesTP2/exportway.geojson');
 
 // au lieu d'un map on cree le foreach (qui le rempli au fur et a mesure pour chaque id (map ca cree un array.)
 
@@ -53,8 +53,17 @@ geojson.features.forEach(function(feature) {
 
 console.log(areaAndlengthbyId);
 
+const data = JSON.stringify(areaAndlengthbyId);
 
-writeJsonData(undefined, geojson);
+fs.writeFile('geojson', data, err => { //(pris de l'internet.Pour ecrire le Geojson.) 
+    if (err) {
+      throw err
+    }
+    console.log('JSON data est valide')
+  })
+
+
+
 
 
 
