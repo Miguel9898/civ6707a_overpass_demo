@@ -1,6 +1,7 @@
 import fs from 'fs';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
+import GeoJSON from 'geojson';
 
 
 const readGeojsonFile = function(filePath) {
@@ -53,14 +54,15 @@ geojson.features.forEach(function(feature) {
 
 console.log(areaAndlengthbyId);
 
+
 const data = JSON.stringify(areaAndlengthbyId);
 
-fs.writeFile('geojson', data, err => { //(pris de l'internet.Pour ecrire le Geojson.) 
+fs.writeFile('geojsonLengthArea.geojson', data, err => { //(pris de l'internet.Pour ecrire le Geojson.) 
     if (err) {
       throw err
     }
     console.log('JSON data est valide')
-  })
+  });
 
 
 
